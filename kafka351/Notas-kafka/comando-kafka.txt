@@ -1,0 +1,37 @@
+para abrrir un cmd 
+
+arrancar zookeeper:
+-------------
+zookeeper-server-start.bat C:\SD-Practica\kafka351\config\zookeeper.properties
+
+arrancar kafka:
+-------------
+kafka-server-start.bat C:\SD-Practica\kafka351\config\server.properties
+
+consutar si existe algun archivo bat:
+-------------
+zookeeper-shell.bat localhost:2181 is brokers/ids
+
+crear topic:
+-------------
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test1
+
+Crear un reproductor:
+-------------
+kafka-console-producer.bat --broker-list  localhost:9092 --topic test1
+
+crear un consumidor:
+--------------------
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test1 --from-beginning
+
+ 
+
+ Listar los topics:
+ --------------------
+ kafka-topics.bat --list --bootstrap-server localhost:9092
+
+
+
+Listar los consumer groups:
+-------------------------------
+kafka-consumer-groups.bat --list --bootstrap-server localhost:9092
