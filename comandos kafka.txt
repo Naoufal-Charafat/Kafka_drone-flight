@@ -1,0 +1,79 @@
+
+#===============================PYTHON============================================
+
+python -m venv nombre_del_entorno_virtual
+pip install -r requirements.txt
+
+# 4. Actualizar todas las dependencias
+pip list --outdated --format=freeze | cut -d = -f 1 | xargs -n1 pip install -U
+
+# 5. Generar un nuevo requirements.txt
+pip freeze > requirements_updated.txt
+
+#=====================================Kafka==========================================
+## arrancar zookeeper:
+
+zookeeper-server-start.bat C:\kafka351\config\zookeeper.properties
+
+## arrancar kafka:
+
+kafka-server-start.bat C:\kafka351\config\server.properties
+
+## consutar si existe algun archivo bat:
+
+zookeeper-shell.bat 169.254.246.73:2181 is brokers/ids
+
+## crear topic:
+
+kafka-topics.bat --create --bootstrap-server 169.254.246.73:9092 --replication-factor 1 --partitions 1 --topic test1
+
+## Crear un reproductor:
+
+kafka-console-producer.bat --broker-list 169.254.246.73:9092 --topic test1
+
+## crear un consumidor:
+
+kafka-console-consumer.bat --bootstrap-server 169.254.246.73:9092 --topic test1 --from-beginningc
+
+Listar los topics:
+
+kafka-topics.bat --list --bootstrap-server 169.254.246.73:9092
+
+Borrar topics:
+Here are some commands that you can use to delete Kafka topics:
+
+kafka-topics.bat --delete --topic 1-destination --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic 1-moveSignal --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic 1-positionUpdate --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic 1_destination --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic Topic-001 --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic \_\_consumer_offsets --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic boardUpdates --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic id-1-destination --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic id1_destination --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic id1destination --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic id_1_destination --bootstrap-server 169.254.246.73:9092
+kafka-topics.bat --delete --topic test002 --bootstrap-server 169.254.246.73:9092
+
+Origen: Conversación con Bing, 11/10/2023
+(1) Creating Kafka Topics - javatpoint. https://www.javatpoint.com/creating-kafka-topics.
+(2) . https://bing.com/search?q=kafka+topics+commands.
+(3) Kafka Topics CLI Tutorial | Learn Apache Kafka with Conduktor. https://www.conduktor.io/kafka/kafka-topics-cli-tutorial/.
+(4) How to view kafka message? - Stack Overflow. https://stackoverflow.com/questions/44239027/how-to-view-kafka-message.
+(5) List of Kafka Commands Cheatsheet - Gankrin. https://gankrin.org/list-of-kafka-commands-cheatsheet/.
+(6) undefined. https://kafkaide.com/learn/list-topics/.
+(7) undefined. https://docs.confluent.io/operator/current/co-manage-topics.html.
+(8) undefined. https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html.
+
+## Listar los consumer groups:
+
+kafka-consumer-groups.bat --list --bootstrap-server 169.254.246.73:9092
+
+Definición de la Arquitectura:
+un modulo llamado registry que se conecta con sockets con el dron y se encarga d eregistraro y guardadr en bd1
+un modulo lamado engine que se conecta con sockets cone el dron para la autentificacion del dron a su vez el engine se conecta con la bd1.
+el engine se conecta con un modulo gestor de colas de eventos (kafka) para hace de enlace entre el engine y el dron (streaming & QM).
+
+un modulo clima que se conecta con bd2 y con engine mediante sockets
+
+tanto bd1 como bd2 es una simple bd de archibo en localhost.
